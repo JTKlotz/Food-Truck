@@ -8,5 +8,8 @@ router.get('/', (request, response) => {
     response.sendFile('index.html', {root})
 })
 
+// router.get('/admin', (request, response) => {
+//     response.sendFile('admin.html', {root})
+// })
 
 module.exports = router
