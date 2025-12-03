@@ -1,30 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="site.css">
-    <script src="site.js" defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hellenic Heat</title>
+	<link rel="stylesheet" href="site.css">
+	<script src="site.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <div class="top">
-            <h1></h1>
-        </div>
-    </header>   
+	<header class="main-header">
+		<div class="hero">
+			<h1 class="truck-name">Hellenic Heat</h1>
+			<p class="tagline">Where gyros meet guacamole</p>
+		</div>
+		<nav class="main-nav">
+			<a href="/">Home</a>
+			<a href="/admin">Admin</a>
+		</nav>
+	</header>
     
     <main class="container">
-        <h2>Menu</h2>
-        <section class="menuList">
+        <section class="hero-section">
+            <p>Experience the explosive flavor of two worlds colliding! We serve up fresh, bold Mexican and Greek classics, creatively fused into unforgettable street food.</p>
+        </section>
+    
+        <hr/>
+    
+        <h2 id="menu-section">Our Fusion Feast!</h2>
+        <section class="menuList grid-container">
+            <p class="loading-message">Loading today's menu...</p>
             <!--Menu itmes will be added with JavaScript-->
         </section>
-        <br/>
-        <h2>Events</h2>
-        <section class="eventsList">
+
+        <hr/>
+
+        <h2 id="events-section">Catch us here!</h2>
+        <section class="eventsList grid-container">
+            <p class="loading-message">Checking our schedule...</p>
             <!--Events will be added with JavaScript-->
         </section>
     </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 Hellenic Heat. Follow us on social media!</p>
+    </footer>
 </body>
 </html>
