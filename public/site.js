@@ -10,7 +10,7 @@ const eventsList = document.querySelector(".eventsList")
 
 // const events = [
 //     {id: 1, name: 'event1', image: '', details: 'Details about event 1', time: '7/11/2025'},
-//     {id: 2, name: 'event2', image: '', details: 'Details about event 2', time: '7/11/2025'}
+//     {eventId: 1, name: 'event1', location: 'Example Park', date: '7/11/2025', time: '15:00'}
     
 // ]
 
@@ -68,7 +68,7 @@ const showMenu = menu => {
 			<img src="${image || 'placeholder-dish.jpg'}" alt="${name}" class="item-image" width = 800px>
 			<h3>${name}</h3>
 			<p class="details"><strong>Details:</strong> ${details}</p>
-            <p class="price"><strong>Price:</strong> ${formattedPrice}</p>
+            <p class="price"><strong>Price:</strong> $${formattedPrice}</p>
             <br/>
 		`
 
@@ -85,18 +85,19 @@ const showEvents = events => {
 		return
 	}
 
-	events?.forEach(({_id, name, image, details, time}) => {
+	events?.forEach(({_id, name, location, date, time}) => {
 		const eventItem = document.createElement("a")
 		eventItem.href = `/event/${_id}`
 		eventItem.className = "event-item card"
-		const eventDate = new Date(time).toLocaleDateString("en-US", {
+		const eventDate = new Date(date).toLocaleDateString("en-US", {
 			weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
 		})
+
 		eventItem.innerHTML = `
-			<img src="${image || 'placeholder-event.jpg'}" alt="${name}" class="item-image">
 			<h3>${name}</h3>
-			<p class="details"><strong>Details:</strong> ${details}</p>
-            <p class="time"><strong>Date and Time</strong> ${eventDate}</p>
+			<p class="location"><strong>Location:</strong> ${location}</p>
+            <p class="date"><strong>Date</strong> ${eventDate}</p>
+
 		`
 		//eventItem.onclick = () => showEventDetails(eventid)
 		eventsList.appendChild(eventItem)

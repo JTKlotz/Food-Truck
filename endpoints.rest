@@ -1,7 +1,20 @@
 
 ### Variables
 
-@apiUrl = http://localhost:5000/
+@apiUrl = http://localhost:5000/api/v1
 
-### Endpoints
-GET {{apiUrl}}
+@menuId = 693101f85e50a4bc7d72e1d6
+
+@eventId = 69319b1b5e50a4bc7d73a33b
+
+### All Menu Items
+GET {{apiUrl}}/menu
+
+### Menu Item by Id
+GET {{apiUrl}}/menu/{{menuId}}
+
+### All Events 
+GET {{apiUrl}}/events
+
+### Event by Id
+GET {{apiUrl}}/events/{{eventId}}
