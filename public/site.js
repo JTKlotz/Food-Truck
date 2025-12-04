@@ -3,8 +3,8 @@ const eventsList = document.querySelector(".eventsList")
 
 
 // const menu = [
-//     {menuid: 2, name: 'Spanakopita Quesadilla', image: 'https://image2url.com/images/1764820209375-0a2f80e0-2eba-497a-8e03-2fd128165dc8.jpg', details: 'A traditional quesadilla replaces the Mexican filling with a savory Greek filling of spinach, feta cheese, and herbs, similar to the filling of spanakopita.', price: '$12.00'},
-//     {menuid: 3, name: 'Grilled Elote', image: 'https://www.skinnytaste.com/wp-content/uploads/2025/06/Mexican-Street-Corn-09.jpg', details: 'The classic grilled or steamed Mexican corn is coated with a mixture using Greek elements like feta cheese, Greek yogurt or crema, and oregano.', price: '$10.00'},
+//     {menuid: 4, name: 'Greek Mole Enchiladas', image: 'https://image2url.com/images/1764821178178-1adc00a7-0707-455b-a8d7-7806a41f28d3.jpg', details: 'Corn tortillas filled with shredded chicken or roasted vegetables are topped with a mole-style sauce infused with Greek flavors, such as cinnamon, cloves, and a hint of honey. Crumbled feta cheese replaces queso fresco for a tangy finish, and the dish is garnished with fresh parsley instead of cilantro.', price: '$15.00'},
+//     {menuid: 5, name: 'Tzatziki Guacamole', image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fthecitygirlskitchen.wordpress.com%2F2014%2F06%2F22%2Fsimple-staples-tzatziki-guacamole-baked-tortillas%2F&psig=AOvVaw3dwTyDBpp7wuozKRIlOLK8&ust=1764907456475000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCPiOzeSGo5EDFQAAAAAdAAAAABAU', details: 'A creamy dip combining classic guacamole (avocado, tomato, onion, lime) with Greek tzatziki elements like grated cucumber, dill, garlic, and a spoonful of Greek yogurt. The result is a cool, tangy hybrid dip perfect for pita chips or tortilla chips.', price: '$9.00'},
     
 // ]
 
@@ -62,12 +62,12 @@ const showMenu = menu => {
 	menu?.forEach(({_id, name, image, details, price}) => {
 		const menuItem = document.createElement("a")
 		menuItem.href = `/menu/${_id}`
-		menuItem.className = "menu-item card"
+		menuItem.className = "menu-item-card"
 		const formattedPrice = parseFloat(price).toFixed(2)
 		menuItem.innerHTML = `
 			<img src="${image || 'placeholder-dish.jpg'}" alt="${name}" class="item-image" width = 800px>
 			<h3>${name}</h3>
-			<p class="details"><strong>Details</strong> ${details}</p>
+			<p class="details"><strong>Details:</strong> ${details}</p>
             <p class="price"><strong>Price:</strong> ${formattedPrice}</p>
             <br/>
 		`
@@ -75,6 +75,7 @@ const showMenu = menu => {
 		menuList.appendChild(menuItem)
 	})
 }
+
 
 const showEvents = events => {
 	eventsList.innerHTML = ''

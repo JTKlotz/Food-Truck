@@ -36,6 +36,10 @@ body {
     margin: 2rem auto;
 }
 
+a.menu-item-card {
+    text-decoration: none;
+    color: black;
+}
 .recipe-list {
     display: grid;
     grid-template-columns: 1fr;
