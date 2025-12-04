@@ -22,4 +22,11 @@ router.get('/:id', async (request, response) => {
     else response.send({error: {message: `Could not find the event with id: ${id}`}})
 })
 
+router.post('/add', async (request, response) => {
+    const {name, location, date, time} = request.body
+    const collection = await getEventItem()
+    const {acknowledged, insertedId} = await collection.insertOne({name, location, date, time})
+    response.send({acknowledged, insertedId})
+})  
+
 module.exports = router

@@ -23,4 +23,11 @@ router.get('/:id', async (request, response) => {
     else response.send({error: {message: `Could not find the menu item with id: ${id}`}})
 })
 
+router.post('/add', async (request, response) => {
+    const {name, image, details, price} = request.body
+    const collection = await getMenuItem()
+    const {acknowledged, insertedId} = await collection.insertOne({name, image, details, price})
+    response.send({acknowledged, insertedId})
+})  
+
 module.exports = router

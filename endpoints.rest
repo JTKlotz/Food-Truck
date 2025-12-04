@@ -18,3 +18,25 @@ GET {{apiUrl}}/events
 
 ### Event by Id
 GET {{apiUrl}}/events/{{eventId}}
+
+### Add new MenuItem
+POST {{apiUrl}}/menu/add
+Content-Type: application/json
+
+{
+    "name": "test", 
+    "image": "", 
+    "details": "about this menu",
+    "price": 3
+}
+
+### Add new Event
+POST {{apiUrl}}/events/add
+Content-Type: application/json
+
+{
+    "name": "test", 
+    "location": "some other park", 
+    "date": "1/1/2025",
+    "time": "12:00"
+}
