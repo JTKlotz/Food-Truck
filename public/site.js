@@ -3,8 +3,8 @@ const eventsList = document.querySelector(".eventsList")
 
 
 // const menu = [
-//     {id: 1, name: 'item1', image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?cs=srgb&dl=pexels-ella-olsson-572949-1640777.jpg&fm=jpg', details: 'Details about item 1', price: '$15.00'},
-//     {id: 2, name: 'item2', image: '', details: 'Details about item 2', price: '$12.00'}
+//     {menuid: 2, name: 'Spanakopita Quesadilla', image: 'https://image2url.com/images/1764820209375-0a2f80e0-2eba-497a-8e03-2fd128165dc8.jpg', details: 'A traditional quesadilla replaces the Mexican filling with a savory Greek filling of spinach, feta cheese, and herbs, similar to the filling of spanakopita.', price: '$12.00'},
+//     {menuid: 3, name: 'Grilled Elote', image: 'https://www.skinnytaste.com/wp-content/uploads/2025/06/Mexican-Street-Corn-09.jpg', details: 'The classic grilled or steamed Mexican corn is coated with a mixture using Greek elements like feta cheese, Greek yogurt or crema, and oregano.', price: '$10.00'},
     
 // ]
 
@@ -65,7 +65,7 @@ const showMenu = menu => {
 		menuItem.className = "menu-item card"
 		const formattedPrice = parseFloat(price).toFixed(2)
 		menuItem.innerHTML = `
-			<img src="${image || 'placeholder-dish.jpg'}" alt="${name}" class="item-image">
+			<img src="${image || 'placeholder-dish.jpg'}" alt="${name}" class="item-image" width = 800px>
 			<h3>${name}</h3>
 			<p class="details"><strong>Details</strong> ${details}</p>
             <p class="price"><strong>Price:</strong> ${formattedPrice}</p>
