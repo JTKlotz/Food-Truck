@@ -107,16 +107,16 @@ const showMenu = menu => {
 }
 
 
-const showEvents = events => {
+const showShortEvents = events => {
     if (!eventsList) return;
     eventsList.innerHTML = ''
     if(!events || events.length === 0)
     {
-        eventsList.innerHTML = '<p>No events currently shceduled. Check back next week!</p>'
+        eventsList.innerHTML = '<p>No events currently scheduled. Check back next week!</p>'
         return
     }
 
-    events?.forEach(({_id, name, location, date, time}) => {
+    events?.forEach(({_id, name, date}) => {
         const eventItem = document.createElement("a")
         eventItem.href = `/event/${_id}`
         eventItem.className = "card-link data-card event"
@@ -136,11 +136,11 @@ const showEvents = events => {
             <img src="${imageUrl}" alt="${name}" class="card-image">
             <div class="card-content">
                 <h3 class="card-title">${name}</h3>
-                <p class="card-description">${location}</p>
+                
             </div>
             <div class="card-footer">
                 <span class="card-value">${eventDate}</span>
-                <span class="card-type">${time}</span>
+                
             </div>
         `
         eventsList.appendChild(eventItem)
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const [menuData, eventsData] = await Promise.all([getMenuItems(), getEvents()])
     
             showMenu(menuData)
-            showEvents(eventsData)
+            showShortEvents(eventsData)
 
             setupModal();
         })()
