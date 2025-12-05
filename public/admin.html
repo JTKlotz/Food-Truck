@@ -3,34 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Hellenic Heat - Admin</title>
     <link rel="stylesheet" href="/site.css">
-    <script src="/site.js" defer></script>
+    <script src="admin.js" defer></script> 
 </head>
 
 <body>
-    <header>
-        <div class="top">
-            <h1></h1>
-
+    <header class="main-header">
+        <div class="hero">
+            <h1 class="truck-name">Hellenic Heat</h1>
+            <p class="tagline">Administrator Dashboard</p>
         </div>
-    </header>   
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/admin">Admin</a>
+        </nav>
+    </header> 	
     
-    <!--Details about specific event or menu item will be added to database-->
-    <div class="container">
-        <span id="update-type"></span>
-        <br/>
-        <label for = "item-name">Item Name</label>
-        <input type="text" id="item-name">
-        <br/>
-        <label for = "item-img">Item Image</label>
-        <input type="text" id="item-img">
-        <br/>
-        <label for = "item-details">Details about the item</label>
-        <input type="text" id="item-details">
-        <br/>
-        <label for = "item-other">Other information about the item</label>
-        <input type="text" id="item-other">
+    <main class="container admin-layout">
+    <h2 class="admin-title">Manage Food Truck Data</h2>
+    
+    <div class="tabs">
+        <input type="radio" name="admin-tabs" id="tab-menu" checked>
+        <label for="tab-menu" class="tab-label">Menu Items</label>
+        
+        <input type="radio" name="admin-tabs" id="tab-event">
+        <label for="tab-event" class="tab-label">Events/Locations</label>
+
+        <div class="tab-content menu-content">
+            <h3 class="form-header menu-header">Add New Menu Item</h3>
+            <form id="menuForm" class="data-form">
+                
+                <label for="menuName">Item Name</label>
+                <input type="text" id="menuName" name="name" required>
+
+                <label for="menuPrice">Price ($)</label>
+                <input type="number" id="menuPrice" name="price" step="0.01" required>
+
+                <label for="menuDetails">Description</label>
+                <textarea id="menuDetails" name="details" required></textarea>
+
+                <label for="menuImage">Image URL (Optional)</label>
+                <input type="url" id="menuImage" name="image">
+
+                <button type="submit" class="btn btn-menu">Add Item</button>
+                <p id="menuMessage" class="message"></p>
+            </form>
+        </div>
+
+        <div class="tab-content event-content">
+    <h3 class="form-header event-header">Add New Event/Location</h3>
+    <form id="eventForm" class="data-form">
+        
+        <label for="eventName">Event Name</label>
+        <input type="text" id="eventName" name="name" required>
+        
+        <label for="eventLocation">Location/Address</label>
+        <textarea id="eventLocation" name="location" required></textarea>
+
+        <label for="eventDate">Date (e.g., 2025-01-01)</label>
+        <input type="date" id="eventDate" name="date" required>
+
+        <label for="eventTime">Time (e.g., 12:00)</label>
+        <input type="time" id="eventTime" name="time" required>
+
+        <button type="submit" class="btn btn-event">Add Event</button>
+        <p id="eventMessage" class="message"></p>
+    </form>
+</div>
     </div>
+</main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 Hellenic Heat. Follow us on social media!</p>
+    </footer>
 </body>
 </html>

@@ -1,138 +1,496 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
+:root {
+    --color-primary: #003366;
+    --color-secondary: #ffc400;
+    --color-sand: #f4f4f4;
+    --color-text: #333333;
+    --color-error: #cc0000;
+}
 
+/* --- Base Styles and Typography --- */
 body {
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-sand);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    overflow-x: hidden; 
 }
 
-/* Header Section */
-.hero {
-    background-image: url('/images/hero.webp');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 2rem;
-    text-align: center;
-
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--color-primary);
+    margin-top: 0;
 }
 
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-	/* text-shadow */
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 0.5em rgba(0, 0, 0, 0.9);
-}
-
-.hero p {
-    font-size: 1.25rem;
-	/* text-shadow */
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9), 0 0 0.5em rgba(0, 0, 0, 0.9);
-}
-
-/* Recipe List */
 .container {
-    max-width: 800px;
-    margin: 2rem auto;
-}
-
-a.menu-item-card {
-    text-decoration: none;
-    color: black;
-}
-.recipe-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-}
-
-.recipe-item {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.recipe-item:hover {
-    transform: scale(1.02);
-}
-
-.recipe-item img {
-    width: 100%;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-	aspect-ratio: 16/9;
-	/* cover */
-	object-fit: cover;
-}
-
-.recipe-item h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 2rem;
-    max-width: 500px;
     width: 90%;
-    border-radius: 8px;
-    position: relative;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* --- Header and Navigation --- */
+.main-header {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.top-bar {
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: flex-start; 
+    gap: 30px; 
+}
+
+.truck-info {
+    padding-left: 0; 
+}
+
+.truck-name {
+    font-size: 3.0rem;
+    color: var(--color-secondary);
+    margin: 0 0 0 20px;
+}
+
+.tagline {
+    font-size: 1.8rem;
+    opacity: 0.8;
+    margin: 0 0 0 60px;
+}
+
+.main-nav {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 10px 5%;
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.main-nav a:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+}
+
+/* --- Section Headings --- */
+.section-header {
+    border-bottom: 3px solid var(--color-primary);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 2.5rem; 
     text-align: center;
 }
 
-.modal-content h2 {
-	font-size: 2rem;
-	margin-bottom: 1rem;
+/* --- Card Grids (Homepage) --- */
+.menuList, .eventsList {
+    display: grid;
+    gap: 30px;
+    margin-bottom: 40px;
+    padding: 0;
+    list-style: none;
 }
 
-.modal-content h3 {
-	font-size: 1.5rem;
-	margin-bottom: 1rem;
+/* Base grid layout - two columns on desktop */
+@media (min-width: 768px) {
+    .menuList {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    .eventsList {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
 }
 
-.modal-content p {
-	font-size: 1.25rem;
-	margin-bottom: 1rem;
+
+/* --- Card Styles (Menu & Event) --- */
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
 }
 
-.modal-content ul {
-	list-style-type: none;
-	margin-bottom: 1rem;
+.data-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.modal-content ul li {
-	margin-bottom: 0.5rem;
+.data-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-.modal-content img {
-    max-width: 100%;
+.card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 4px solid var(--color-secondary);
+}
+
+.card-content {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.card-title {
+    font-size: 1.75rem; 
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+.card-description {
+    color: var(--color-text);
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.card-content p {
+    margin: 5px 0;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-sand);
+    border-top: 1px solid #eee;
+}
+
+.card-value {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-primary);
+}
+
+.card-type {
+    padding: 0.25rem 0.5rem;
+    border: solid 2px var(--color-primary);
+    border-radius: 4px 4px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    background-color: var(--color-secondary);
+}
+
+/* Specific Card Type Styling */
+.data-card.menu .card-type {
+    background-color: var(--color-secondary); /* Blue badge for Menu */
+}
+.data-card.event .card-type {
+    background-color: var(--color-secondary); /* Purple/Accent badge for Events */
+}
+
+/* --- Footer --- */
+.main-footer {
+    background-color: var(--color-primary);
+    color: var(--color-sand);
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+    font-size: 0.9rem;
+}
+
+
+
+
+
+/* --- Admin Page Styles --- */
+
+.admin-layout {
+    display: grid;
+    gap: 40px;
+    padding-top: 40px;
+    grid-template-columns: 1fr; 
+}
+
+@media (min-width: 768px) {
+    .admin-layout {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.admin-title {
+    grid-column: 1 / -1;
+    color: var(--color-primary);
+    text-align: center;
+    font-size: 2.0em;
+    margin-bottom: 100px;
+}
+
+.data-form {
+    background-color: var(--color-light);
+    padding: 30px;
     border-radius: 8px;
-    margin-bottom: 1rem;
-	aspect-ratio: 4/1;
-	/* cover */
-	object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.5rem;
+.data-form label {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: var(--color-text);
+    font-size: 1.1em;
+}
+
+.data-form input:not([type="submit"]),
+.data-form textarea {
+    padding: 10px;
+    border: 1px solid var(--color-text);
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.data-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    color: var(--color-white);
+    font-size: 1.1em;
     cursor: pointer;
+    margin-top: 25px;
+    transition: background-color 0.3s;
+}
+
+.btn-menu {
+    background-color: #ff8f00;
+    max-width: 130px;
+    font-weight: bolder;
+}
+
+.btn-event {
+    background-color: #ff8f00;
+    max-width: 130px;
+    font-weight: bolder;
+}
+
+.btn-menu:hover {
+    border: solid 2px #333333;
+}
+
+.btn-event:hover {
+    border: solid 2px #333333;
+}
+
+.message {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* --- Tabbed Admin Interface Styles --- */
+
+/* Hide the radio button inputs */
+.tabs input[type="radio"] {
+    display: none;
+}
+
+.tabs {
+    grid-column: 1 / -1; /* Make the tabs span the full width */
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form-header {
+    font-size: 1.3em;
+}
+
+.menu-header {
+    font-size: 1.3em;
+}
+
+.tab-label {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #e0e0e0;
+    color: var(--color-primary);
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.2s, color 0.2s;
+    border: 1px solid var(--color-primary);
+    border-bottom: none;
+    margin-right: 5px;
+}
+
+.tab-label:hover {
+    background-color: var(--color-light);
+    border: solid 1px #003366;
+}
+
+/* Style for the active (checked) tab label */
+.tabs input[type="radio"]:checked + .tab-label {
+    background-color: var(--color-primary);
+    color: var(--color-sand);
+    border-color: var(--color-primary);
+}
+
+/* Hide all tab content by default */
+.tab-content {
+    display: none;
+    padding: 20px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary);
+    border-radius: 0 8px 8px 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Show content when the corresponding radio button is checked */
+#tab-menu:checked ~ .menu-content,
+#tab-event:checked ~ .event-content {
+    display: block;
+}
+
+.admin-layout {
+    display: block;
+}
+
+
+
+
+
+
+/* --- Detail Page Styles --- */
+
+.event-detail-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 0; 
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.event-image-full {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-bottom: 5px solid var(--color-secondary); 
+}
+
+.event-detail-content {
+    padding: 30px;
+}
+
+.event-detail-title {
+    font-size: 3rem;
+    font-family: 'Playfair Display', serif;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.event-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 25px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.event-detail-item {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.event-detail-item strong {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+.event-detail-label {
+    font-size: 0.9rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.event-description-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text);
+}
+
+/* --- ADMIN FORM STYLES --- */
+.admin-form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+}
+
+.admin-form input[type="text"],
+.admin-form input[type="number"],
+.admin-form input[type="url"],
+.admin-form input[type="date"],
+.admin-form input[type="time"],
+.admin-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: white;
+}
+
+.admin-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.admin-form input:focus,
+.admin-form textarea:focus {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 5px rgba(255, 196, 0, 0.5);
+    outline: none;
+}
+
+.admin-form-group {
+    margin-bottom: 20px;
+}
+
+.admin-form .submit-button-group {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end;
 }

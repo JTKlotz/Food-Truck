@@ -1,115 +1,287 @@
+const API_BASE_URL = 'http://localhost:5000'; 
+
 const menuList = document.querySelector(".menuList")
 const eventsList = document.querySelector(".eventsList")
 
-
-// const menu = [
-//     {menuid: 4, name: 'Greek Mole Enchiladas', image: 'https://image2url.com/images/1764821178178-1adc00a7-0707-455b-a8d7-7806a41f28d3.jpg', details: 'Corn tortillas filled with shredded chicken or roasted vegetables are topped with a mole-style sauce infused with Greek flavors, such as cinnamon, cloves, and a hint of honey. Crumbled feta cheese replaces queso fresco for a tangy finish, and the dish is garnished with fresh parsley instead of cilantro.', price: '$15.00'},
-//     {menuid: 5, name: 'Tzatziki Guacamole', image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fthecitygirlskitchen.wordpress.com%2F2014%2F06%2F22%2Fsimple-staples-tzatziki-guacamole-baked-tortillas%2F&psig=AOvVaw3dwTyDBpp7wuozKRIlOLK8&ust=1764907456475000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCPiOzeSGo5EDFQAAAAAdAAAAABAU', details: 'A creamy dip combining classic guacamole (avocado, tomato, onion, lime) with Greek tzatziki elements like grated cucumber, dill, garlic, and a spoonful of Greek yogurt. The result is a cool, tangy hybrid dip perfect for pita chips or tortilla chips.', price: '$9.00'},
-    
-// ]
-
-// const events = [
-//     {id: 1, name: 'event1', image: '', details: 'Details about event 1', time: '7/11/2025'},
-//     {eventId: 1, name: 'event1', location: 'Example Park', date: '7/11/2025', time: '15:00'}
-    
-// ]
+const modal = document.getElementById('menuDetailModal');
+const modalCloseBtn = modal ? modal.querySelector('.modal-close-btn') : null;
 
 
 const getMenuItems = async () => {
-	try
-	{
-		const response = await fetch('/api/v1/menu')
-		if(!response.ok)
-		{
-			throw new Error(`HTTP Error status: ${response.status}`)
-		}
-		return await response.json()
-	}
-	catch (error)
-	{
-		console.error("Could not fetch menu", error)
-		menuList.innerHTML = '<p>Error loading menu.</p>'
-		return []
-	}
+    try
+    {
+        const response = await fetch(`${API_BASE_URL}/api/v1/menu`)
+        if(!response.ok)
+        {
+            throw new Error(`HTTP Error status: ${response.status}`)
+        }
+        return await response.json()
+    }
+    catch (error)
+    {
+        console.error("Could not fetch menu", error)
+        if(menuList) menuList.innerHTML = `<p>Error loading menu. (Check API server is running on ${API_BASE_URL})</p>`
+        return []
+    }
 }
 
 const getEvents = async () => {
-	try
-	{
-		const response = await fetch('/api/v1/events')
-		if(!response.ok)
-		{
-			throw new Error(`HTTP Error status ${response.status}`)
-		}
-		return await response.json()
-	}
-	catch (error)
-	{
-		console.error("Could not fetch events.", error)
-		eventsList.innerHTML = '<p>Error loading events schedule.</p>'
-		return []
-	}
+    try
+    {
+        const response = await fetch(`${API_BASE_URL}/api/v1/events`)
+        if(!response.ok)
+        {
+            throw new Error(`HTTP Error status ${response.status}`)
+        }
+        return await response.json()
+    }
+    catch (error)
+    {
+        console.error("Could not fetch events.", error)
+        if(eventsList) eventsList.innerHTML = `<p>Error loading events schedule. (Check API server is running on ${API_BASE_URL})</p>`
+        return []
+    }
 }
 
-const showMenu = menu => {
-	menuList.innerHTML = ''
-	if(!menu || menu.length === 0)
-		{
-			menuList.innerHTML = '<p>Oops! We\'re updating the menu Check back soon!</p>'
-			return
-		}
-	
-	menu?.forEach(({_id, name, image, details, price}) => {
-		const menuItem = document.createElement("a")
-		menuItem.href = `/menu/${_id}`
-		menuItem.className = "menu-item-card"
-		const formattedPrice = parseFloat(price).toFixed(2)
-		menuItem.innerHTML = `
-			<img src="${image || 'placeholder-dish.jpg'}" alt="${name}" class="item-image" width = 800px>
-			<h3>${name}</h3>
-			<p class="details"><strong>Details:</strong> ${details}</p>
-            <p class="price"><strong>Price:</strong> $${formattedPrice}</p>
-            <br/>
-		`
+const getEventDetails = async (eventId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/v1/events/${eventId}`);
+        if (response.status === 404) {
+             throw new Error("Event not found (404)");
+        }
+        if (!response.ok) {
+            throw new Error(`HTTP Error status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Could not fetch event details:", error);
+        return null;
+    }
+}
 
-		menuList.appendChild(menuItem)
-	})
+
+const showMenu = menu => {
+    if (!menuList) return;
+    menuList.innerHTML = ''
+    if(!menu || menu.length === 0)
+        {
+            menuList.innerHTML = '<p>Oops! We\'re updating the menu Check back soon!</p>'
+            return
+        }
+    
+    menu?.forEach(({_id, name, image, details, price}) => {
+        let imageUrl = image;
+        if (imageUrl && imageUrl.includes('google.com/url')) {
+             imageUrl = 'https://placehold.co/400x250/333/eee?text=Fusion+Dish';
+        } else if (!imageUrl) {
+            imageUrl = 'placeholder-dish.jpg';
+        }
+
+        const menuItem = document.createElement("a")
+        menuItem.href = "#" 
+        
+        menuItem.className = "card-link data-card menu menu-modal-trigger"
+        
+        const formattedPrice = parseFloat(price).toFixed(2)
+        
+        menuItem.dataset.id = _id;
+        menuItem.dataset.name = name;
+        menuItem.dataset.image = imageUrl;
+        menuItem.dataset.details = details;
+        menuItem.dataset.price = formattedPrice;
+
+        menuItem.innerHTML = `
+            <img src="${imageUrl}" alt="${name}" class="card-image">
+            <div class="card-content">
+                <h3 class="card-title">${name}</h3>
+                <p class="card-description">${details}</p>
+            </div>
+            <div class="card-footer">
+                <span class="card-value">$${formattedPrice}</span>
+                <span class="card-type">MENU</span>
+            </div>
+        `
+
+        menuList.appendChild(menuItem)
+    })
 }
 
 
 const showEvents = events => {
-	eventsList.innerHTML = ''
-	if(!events || events.length === 0)
-	{
-		eventsList.innerHTML = '<p>No events currently shceduled. Check back next week!</p>'
-		return
-	}
+    if (!eventsList) return;
+    eventsList.innerHTML = ''
+    if(!events || events.length === 0)
+    {
+        eventsList.innerHTML = '<p>No events currently shceduled. Check back next week!</p>'
+        return
+    }
 
-	events?.forEach(({_id, name, location, date, time}) => {
-		const eventItem = document.createElement("a")
-		eventItem.href = `/event/${_id}`
-		eventItem.className = "event-item card"
-		const eventDate = new Date(date).toLocaleDateString("en-US", {
-			weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-		})
-
-		eventItem.innerHTML = `
-			<h3>${name}</h3>
-			<p class="location"><strong>Location:</strong> ${location}</p>
-            <p class="date"><strong>Date</strong> ${eventDate}</p>
-
-		`
-		//eventItem.onclick = () => showEventDetails(eventid)
-		eventsList.appendChild(eventItem)
-	})
+    events?.forEach(({_id, name, location, date, time}) => {
+        const eventItem = document.createElement("a")
+        eventItem.href = `/event/${_id}`
+        eventItem.className = "card-link data-card event"
+        
+        let eventDate = 'Date/Time Unknown';
+        try {
+            eventDate = new Date(date).toLocaleDateString("en-US", {
+                month: 'short', day: 'numeric', year: 'numeric'
+            })
+        } catch (e) {
+            eventDate = `Date N/A`; 
+        }
+        
+        const imageUrl = "https://placehold.co/400x200/003366/ffc400?text=Event"; 
+        
+        eventItem.innerHTML = `
+            <img src="${imageUrl}" alt="${name}" class="card-image">
+            <div class="card-content">
+                <h3 class="card-title">${name}</h3>
+                <p class="card-description">${location}</p>
+            </div>
+            <div class="card-footer">
+                <span class="card-value">${eventDate}</span>
+                <span class="card-type">${time}</span>
+            </div>
+        `
+        eventsList.appendChild(eventItem)
+    })
 }
 
-document.addEventListener('DOMContentLoaded', () =>{
-	(async () => {
-		const [menuData, eventsData] = await Promise.all([getMenuItems(), getEvents()])
 
-		showMenu(menuData)
-		showEvents(eventsData)
-})()
-})
+const showEventDetails = (event) => {
+    const contentDiv = document.getElementById('eventDetailContent');
+    if (!contentDiv) return;
 
+    if (!event) {
+        contentDiv.innerHTML = '<h2 class="section-header">Event Not Found</h2><p style="text-align: center;">Sorry, the event you are looking for does not exist or has been cancelled.</p>';
+        return;
+    }
+    
+    // Format date for the main detail page
+    const eventDate = new Date(event.date);
+    const formattedDate = eventDate.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    
+    const imageUrl = "https://placehold.co/1000x350/003366/ffc400?text=Featured+Event";
+
+    // Inject the HTML for event
+    contentDiv.innerHTML = `
+        <div class="event-detail-container">
+            <img src="${imageUrl}" alt="${event.name}" class="event-image-full">
+            
+            <div class="event-detail-content">
+                <h1 class="event-detail-title">${event.name}</h1>
+                
+                <div class="event-metadata">
+                    <div class="event-detail-item">
+                        <span class="event-detail-label">Date</span>
+                        <strong>${formattedDate}</strong>
+                    </div>
+                    <div class="event-detail-item">
+                        <span class="event-detail-label">Time</span>
+                        <strong>${event.time}</strong>
+                    </div>
+                    <div class="event-detail-item">
+                        <span class="event-detail-label">Location</span>
+                        <strong>${event.location}</strong>
+                    </div>
+                </div>
+                
+                <h2>Event Details</h2>
+                <p class="event-description-text">${event.details || 'No detailed description provided for this event.'}</p>
+            </div>
+        </div>
+    `;
+};
+
+// --- MODAL FUNCTIONS FOR IMAGE CLICK POPUP ---
+
+const showModal = (data) => {
+    if (!modal) return;
+    
+    // Populate the modal content (Image only)
+    document.getElementById('modalImage').src = data.image;
+    document.getElementById('modalImage').alt = data.name;
+    
+    // Show the modal
+    modal.classList.remove('hidden');
+    modalCloseBtn?.focus(); 
+}
+
+const hideModal = () => {
+    if (!modal) return;
+    modal.classList.add('hidden');
+}
+
+const setupModal = () => {
+    if (!menuList) return;
+
+    // Event listener for opening the modal (delegation on the list container)
+    menuList.addEventListener('click', (e) => {
+        // Find the closest ancestor that has the menu-modal-trigger class (the <a> tag)
+        const trigger = e.target.closest('.menu-modal-trigger');
+        if (trigger) {
+            e.preventDefault(); // Crucial: Stop navigation to #
+            
+            // Collect the data from the data- attributes
+            const data = trigger.dataset;
+            showModal(data);
+        }
+    });
+
+    // Event listeners for closing the modal
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', hideModal);
+    }
+    
+    // Close modal when clicking outside the content
+    modal.addEventListener('click', (e) => {
+        // Ensure the click target is the modal overlay itself, not content inside it
+        if (e.target.id === 'menuDetailModal') {
+            hideModal();
+        }
+    });
+    
+    // Close modal on escape key press
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+            hideModal();
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const path = window.location.pathname;
+    
+    // Check if the current URL path starts with /event/ (meaning it's a detail page)
+    if (path.startsWith('/event/')) {
+        const parts = path.split('/');
+        const eventId = parts[2]; // The ID is the third part (e.g., in /event/123)
+        
+        if (eventId) {
+            (async () => {
+                const eventData = await getEventDetails(eventId);
+                showEventDetails(eventData);
+            })();
+        } else {
+             // Handle case where path is just /event/ with no ID
+            const contentDiv = document.getElementById('eventDetailContent');
+            if(contentDiv) contentDiv.innerHTML = '<p style="text-align: center;">No Event ID provided.</p>';
+        }
+    } 
+    // Otherwise, assume it's the index page (or any page where lists should load)
+    else {
+        (async () => {
+            const [menuData, eventsData] = await Promise.all([getMenuItems(), getEvents()])
+    
+            showMenu(menuData)
+            showEvents(eventsData)
+
+            setupModal();
+        })()
+    }
+});

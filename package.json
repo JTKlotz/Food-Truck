@@ -11,6 +11,15 @@
   },
   "dependencies": {
     "express": "^5.1.0",
-    "mongodb": "^7.0.0"
-  }
+    "mongodb": "^6.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JTKlotz/Food-Truck.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/JTKlotz/Food-Truck/issues"
+  },
+  "homepage": "https://github.com/JTKlotz/Food-Truck#readme"
 }
