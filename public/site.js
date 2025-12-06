@@ -69,16 +69,12 @@ const showMenu = menu => {
             return
         }
 
-    const fallbackimage = 'https://placehold.co/400x250/6699CC/FFFFFF?text=Hellenic+Heat'
+    const MENU_FALLBACK_IMAGE = 'https://placehold.co/400x250/6699CC/FFFFFF?text=Hellenic+Heat+Dish'
     
     menu?.forEach(({_id, name, image, details, price}) => {
-        let imageUrl = image || fallbackimage
-        if (imageUrl && imageUrl.includes('google.com/url')) {
-             imageUrl = 'https://placehold.co/400x250/333/eee?text=Fusion+Dish'
-        } else if (!imageUrl) {
-            imageUrl = 'placeholder-dish.jpg'
-        }
-
+        
+        let imageUrl = image || MENU_FALLBACK_IMAGE
+        
         const menuItem = document.createElement("a")
         menuItem.href = "#" 
         
@@ -97,7 +93,8 @@ const showMenu = menu => {
                 src="${imageUrl}" 
                 alt="${name}" 
                 class="card-image" 
-                onerror="this.onerror=null; this.src='${fallbackimage}'">
+                // 3. Ensure onerror uses the correct constant.
+                onerror="this.onerror=null; this.src='${MENU_FALLBACK_IMAGE}'">
             <div class="card-content">
                 <h3 class="card-title">${name}</h3>
                 <p class="card-description">${details}</p>
@@ -122,6 +119,8 @@ const showShortEvents = events => {
         return
     }
 
+    const EVENT_FALLBACK_IMAGE = "https://placehold.co/400x200/003366/ffc400?text=Event"
+
     // Sort the events by date
     const compareEvents = (a,b) => {
         return a.date === b.date ? 0 : a.date > b.date ? 1 : -1
@@ -129,7 +128,7 @@ const showShortEvents = events => {
 
     const sortedEvents = events.toSorted(compareEvents)
 
-    sortedEvents?.forEach(({_id, name, date}) => {
+    sortedEvents?.forEach(({_id, name, date, image}) => {
         const eventItem = document.createElement("a")
         eventItem.href = `/event/${_id}`
         eventItem.className = "card-link data-card event"
@@ -143,17 +142,21 @@ const showShortEvents = events => {
             eventDate = `Date N/A`
         }
         
-        const imageUrl = "https://placehold.co/400x200/003366/ffc400?text=Event"
+        const eventImageUrl = image || EVENT_FALLBACK_IMAGE
         
         eventItem.innerHTML = `
-            <img src="${imageUrl}" alt="${name}" class="card-image">
+            <img 
+                src="${eventImageUrl}" 
+                alt="${name}" 
+                class="card-image"
+                onerror="this.onerror=null; this.src='${EVENT_FALLBACK_IMAGE}'">
             <div class="card-content">
                 <h3 class="card-title">${name}</h3>
                 
             </div>
             <div class="card-footer">
                 <span class="card-value">${eventDate}</span>
-                
+                <span class="card-type">EVENT</span>
             </div>
         `
         eventsList.appendChild(eventItem)
@@ -179,12 +182,18 @@ const showEventDetails = (event) => {
         day: 'numeric' 
     })
     
-    const imageUrl = "https://placehold.co/1000x350/003366/ffc400?text=Featured+Event"
+    const FEATURED_FALLBACK_IMAGE  = "https://placehold.co/1000x350/003366/ffc400?text=Featured+Event"
+
+    const eventImageUrl = event.image || FEATURED_FALLBACK_IMAGE
 
     // Inject the HTML for event
     contentDiv.innerHTML = `
         <div class="event-detail-container">
-            <img src="${imageUrl}" alt="${event.name}" class="event-image-full">
+            <img 
+                src="${eventImageUrl}" 
+                alt="${event.name}" 
+                class="event-image-full"
+                onerror="this.onerror=null; this.src='${FEATURED_FALLBACK_IMAGE}'">
             
             <div class="event-detail-content">
                 <h1 class="event-detail-title">${event.name}</h1>

@@ -63,11 +63,17 @@
         <label for="eventLocation">Location/Address</label>
         <textarea id="eventLocation" name="location" required></textarea>
 
+        <label for="eventDetails">Event Details/Description</label>
+        <textarea id="eventDetails" name="details" rows="3"></textarea>
+
         <label for="eventDate">Date (mm/dd/yyyy)</label>
         <input type="date" id="eventDate" name="date" required>
 
         <label for="eventTime">Time (00:00)</label>
         <input type="time" id="eventTime" name="time" required>
+
+        <label for="eventImage">Image URL (optional)</label>
+        <input type="url" id="eventImage" name="image">
 
         <button type="submit" class="btn btn-event">Add Event</button>
         <p id="eventMessage" class="message"></p>

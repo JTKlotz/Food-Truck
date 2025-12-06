@@ -95,10 +95,12 @@ if (eventForm) {
             location: formData.get('location'), 
             date: formData.get('date'),
             time: formData.get('time'),
+            details: formData.get('details') || undefined,
+            image: formData.get('image') || undefined,
         };
 
         if (!data.name || !data.location || !data.date || !data.time) {
-            displayMessage(eventMessage, 'All event fields are required.', true);
+            displayMessage(eventMessage, 'Event Name, Location, Date, and Time are required.', true);
             return;
         }
 
