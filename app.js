@@ -1,7 +1,7 @@
 
 const express = require('express')
 const app = express()
-const port = 5000
+const port = 3010
 
 
 // respond with static webpages
