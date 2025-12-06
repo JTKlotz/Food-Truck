@@ -116,7 +116,14 @@ const showShortEvents = events => {
         return
     }
 
-    events?.forEach(({_id, name, date}) => {
+    // Sort the events by date
+    const compareEvents = (a,b) => {
+        return a.date === b.date ? 0 : a.date > b.date ? 1 : -1
+    }
+
+    const sortedEvents = events.toSorted(compareEvents)
+
+    sortedEvents?.forEach(({_id, name, date}) => {
         const eventItem = document.createElement("a")
         eventItem.href = `/event/${_id}`
         eventItem.className = "card-link data-card event"
