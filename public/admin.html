@@ -11,7 +11,9 @@
 <body>
     <header class="main-header">
         <div class="hero">
-            <h1 class="truck-name">Hellenic Heat</h1>
+            <h1 class="truck-name">
+                <a href="/" style="text-decoration: none; color: inherit;">Hellenic Heat</a>
+            </h1>
             <p class="tagline">Administrator Dashboard</p>
         </div>
         <nav class="main-nav">
@@ -61,10 +63,10 @@
         <label for="eventLocation">Location/Address</label>
         <textarea id="eventLocation" name="location" required></textarea>
 
-        <label for="eventDate">Date (e.g., 2025-01-01)</label>
+        <label for="eventDate">Date (mm/dd/yyyy)</label>
         <input type="date" id="eventDate" name="date" required>
 
-        <label for="eventTime">Time (e.g., 12:00)</label>
+        <label for="eventTime">Time (00:00)</label>
         <input type="time" id="eventTime" name="time" required>
 
         <button type="submit" class="btn btn-event">Add Event</button>
