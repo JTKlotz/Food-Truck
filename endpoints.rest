@@ -1,11 +1,11 @@
 
 ### Variables
 
-@apiUrl = http://localhost:5000/api/v1
+@apiUrl = http://localhost:3010/api/v1
 
 @menuId = 693101f85e50a4bc7d72e1d6
 
-@eventId = 69319b1b5e50a4bc7d73a33b
+@eventId = 693364588d001eae8c9e5113
 
 ### All Menu Items
 GET {{apiUrl}}/menu
@@ -38,5 +38,7 @@ Content-Type: application/json
     "name": "test", 
     "location": "some other park", 
     "date": "1/1/2025",
-    "time": "12:00"
+    "time": "12:00",
+    "image": "https://placehold.co/400x200/003366/ffc400?text=Event",
+    "details": "About this event"
 }

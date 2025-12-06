@@ -23,9 +23,9 @@ router.get('/:id', async (request, response) => {
 })
 
 router.post('/add', async (request, response) => {
-    const {name, location, date, time} = request.body
+    const {name, location, date, time, details, image} = request.body
     const collection = await getEventItem()
-    const {acknowledged, insertedId} = await collection.insertOne({name, location, date, time})
+    const {acknowledged, insertedId} = await collection.insertOne({name, location, date, time, details, image})
     response.send({acknowledged, insertedId})
 })  
 
