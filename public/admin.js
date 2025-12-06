@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'http://localhost:3010';
 
 const menuForm = document.getElementById('menuForm');
 const eventForm = document.getElementById('eventForm');
