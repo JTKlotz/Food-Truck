@@ -37,8 +37,8 @@ Content-Type: application/json
 {
     "name": "test", 
     "location": "some other park", 
-    "date": "1/1/2025",
-    "time": "12:00",
+    "date": "2026-08-04T10:00:00",
+    "time": "10:00",
     "details": "About this event",
     "image": "https://placehold.co/400x200/003366/ffc400?text=Event"
 }
