@@ -1,10 +1,10 @@
-const API_BASE_URL = 'http://localhost:5000'; 
+const API_BASE_URL = 'http://localhost:5000'
 
 const menuList = document.querySelector(".menuList")
 const eventsList = document.querySelector(".eventsList")
 
 const modal = document.getElementById('menuDetailModal');
-const modalCloseBtn = modal ? modal.querySelector('.modal-close-btn') : null;
+const modalCloseBtn = modal ? modal.querySelector('.modal-close-btn') : null
 
 
 const getMenuItems = async () => {
@@ -45,17 +45,17 @@ const getEvents = async () => {
 
 const getEventDetails = async (eventId) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/events/${eventId}`);
+        const response = await fetch(`${API_BASE_URL}/api/v1/events/${eventId}`)
         if (response.status === 404) {
-             throw new Error("Event not found (404)");
+             throw new Error("Event not found (404)")
         }
         if (!response.ok) {
-            throw new Error(`HTTP Error status: ${response.status}`);
+            throw new Error(`HTTP Error status: ${response.status}`)
         }
         return await response.json();
     } catch (error) {
-        console.error("Could not fetch event details:", error);
-        return null;
+        console.error("Could not fetch event details:", error)
+        return null
     }
 }
 
@@ -68,13 +68,15 @@ const showMenu = menu => {
             menuList.innerHTML = '<p>Oops! We\'re updating the menu Check back soon!</p>'
             return
         }
+
+    const fallbackimage = 'https://placehold.co/400x250/6699CC/FFFFFF?text=Hellenic+Heat'
     
     menu?.forEach(({_id, name, image, details, price}) => {
-        let imageUrl = image;
+        let imageUrl = image || fallbackimage
         if (imageUrl && imageUrl.includes('google.com/url')) {
-             imageUrl = 'https://placehold.co/400x250/333/eee?text=Fusion+Dish';
+             imageUrl = 'https://placehold.co/400x250/333/eee?text=Fusion+Dish'
         } else if (!imageUrl) {
-            imageUrl = 'placeholder-dish.jpg';
+            imageUrl = 'placeholder-dish.jpg'
         }
 
         const menuItem = document.createElement("a")
@@ -84,14 +86,18 @@ const showMenu = menu => {
         
         const formattedPrice = parseFloat(price).toFixed(2)
         
-        menuItem.dataset.id = _id;
-        menuItem.dataset.name = name;
-        menuItem.dataset.image = imageUrl;
-        menuItem.dataset.details = details;
-        menuItem.dataset.price = formattedPrice;
+        menuItem.dataset.id = _id
+        menuItem.dataset.name = name
+        menuItem.dataset.image = imageUrl
+        menuItem.dataset.details = details
+        menuItem.dataset.price = formattedPrice
 
         menuItem.innerHTML = `
-            <img src="${imageUrl}" alt="${name}" class="card-image">
+            <img 
+                src="${imageUrl}" 
+                alt="${name}" 
+                class="card-image" 
+                onerror="this.onerror=null; this.src='${fallbackimage}'">
             <div class="card-content">
                 <h3 class="card-title">${name}</h3>
                 <p class="card-description">${details}</p>
@@ -128,16 +134,16 @@ const showShortEvents = events => {
         eventItem.href = `/event/${_id}`
         eventItem.className = "card-link data-card event"
         
-        let eventDate = 'Date/Time Unknown';
+        let eventDate = 'Date/Time Unknown'
         try {
             eventDate = new Date(date).toLocaleDateString("en-US", {
                 month: 'short', day: 'numeric', year: 'numeric'
             })
         } catch (e) {
-            eventDate = `Date N/A`; 
+            eventDate = `Date N/A`
         }
         
-        const imageUrl = "https://placehold.co/400x200/003366/ffc400?text=Event"; 
+        const imageUrl = "https://placehold.co/400x200/003366/ffc400?text=Event"
         
         eventItem.innerHTML = `
             <img src="${imageUrl}" alt="${name}" class="card-image">
@@ -156,12 +162,12 @@ const showShortEvents = events => {
 
 
 const showEventDetails = (event) => {
-    const contentDiv = document.getElementById('eventDetailContent');
+    const contentDiv = document.getElementById('eventDetailContent')
     if (!contentDiv) return;
 
     if (!event) {
-        contentDiv.innerHTML = '<h2 class="section-header">Event Not Found</h2><p style="text-align: center;">Sorry, the event you are looking for does not exist or has been cancelled.</p>';
-        return;
+        contentDiv.innerHTML = '<h2 class="section-header">Event Not Found</h2><p style="text-align: center;">Sorry, the event you are looking for does not exist or has been cancelled.</p>'
+        return
     }
     
     // Format date for the main detail page
@@ -171,9 +177,9 @@ const showEventDetails = (event) => {
         year: 'numeric', 
         month: 'long', 
         day: 'numeric' 
-    });
+    })
     
-    const imageUrl = "https://placehold.co/1000x350/003366/ffc400?text=Featured+Event";
+    const imageUrl = "https://placehold.co/1000x350/003366/ffc400?text=Featured+Event"
 
     // Inject the HTML for event
     contentDiv.innerHTML = `
@@ -211,8 +217,8 @@ const showModal = (data) => {
     if (!modal) return;
     
     // Populate the modal content (Image only)
-    document.getElementById('modalImage').src = data.image;
-    document.getElementById('modalImage').alt = data.name;
+    document.getElementById('modalImage').src = data.image
+    document.getElementById('modalImage').alt = data.name
     
     // Show the modal
     modal.classList.remove('hidden');
@@ -221,7 +227,7 @@ const showModal = (data) => {
 
 const hideModal = () => {
     if (!modal) return;
-    modal.classList.add('hidden');
+    modal.classList.add('hidden')
 }
 
 const setupModal = () => {
@@ -230,12 +236,12 @@ const setupModal = () => {
     // Event listener for opening the modal (delegation on the list container)
     menuList.addEventListener('click', (e) => {
         // Find the closest ancestor that has the menu-modal-trigger class (the <a> tag)
-        const trigger = e.target.closest('.menu-modal-trigger');
+        const trigger = e.target.closest('.menu-modal-trigger')
         if (trigger) {
             e.preventDefault(); // Crucial: Stop navigation to #
             
             // Collect the data from the data- attributes
-            const data = trigger.dataset;
+            const data = trigger.dataset
             showModal(data);
         }
     });
@@ -266,18 +272,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Check if the current URL path starts with /event/ (meaning it's a detail page)
     if (path.startsWith('/event/')) {
-        const parts = path.split('/');
-        const eventId = parts[2]; // The ID is the third part (e.g., in /event/123)
+        const parts = path.split('/')
+        const eventId = parts[2] // The ID is the third part (e.g., in /event/123)
         
         if (eventId) {
             (async () => {
                 const eventData = await getEventDetails(eventId);
-                showEventDetails(eventData);
+                showEventDetails(eventData)
             })();
         } else {
              // Handle case where path is just /event/ with no ID
             const contentDiv = document.getElementById('eventDetailContent');
-            if(contentDiv) contentDiv.innerHTML = '<p style="text-align: center;">No Event ID provided.</p>';
+            if(contentDiv) contentDiv.innerHTML = '<p style="text-align: center;">No Event ID provided.</p>'
         }
     } 
     // Otherwise, assume it's the index page (or any page where lists should load)
