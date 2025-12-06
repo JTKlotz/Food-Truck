@@ -39,6 +39,6 @@ Content-Type: application/json
     "location": "some other park", 
     "date": "1/1/2025",
     "time": "12:00",
-    "image": "https://placehold.co/400x200/003366/ffc400?text=Event",
-    "details": "About this event"
+    "details": "About this event",
+    "image": "https://placehold.co/400x200/003366/ffc400?text=Event"
 }
