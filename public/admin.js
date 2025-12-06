@@ -86,22 +86,30 @@ if (menuForm) {
 
 // Event form submission
 if (eventForm) {
-    eventForm.addEventListener('submit', (e) => {
+    eventForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const formData = new FormData(eventForm);
-        const data = {
-            name: formData.get('name'),
-            location: formData.get('location'), 
-            date: formData.get('date'),
-            time: formData.get('time'),
-            details: formData.get('details') || undefined,
-            image: formData.get('image') || undefined,
-        };
+        const name = eventForm.elements['eventName'].value
+        const location = eventForm.elements['location'].value
+        const dateInput = eventForm.elements['eventDate'].value
+        const timeInput = eventForm.elements['eventTime'].value
+        const details = eventForm.elements['eventDetails'].value
+        const image = eventForm.elements['eventImage'].value
 
-        if (!data.name || !data.location || !data.date || !data.time) {
+        if (!name || !location || !dateInput || !timeInput) {
             displayMessage(eventMessage, 'Event Name, Location, Date, and Time are required.', true);
             return;
+        }
+
+        const fullDate = `${dateInput}T${timeInput}:00`
+
+        const data = {
+            name,
+            location, 
+            date: fullDate,
+            time: timeInput,
+            details: details,
+            image: image,
         }
 
         postData('events/add', data, eventMessage, eventForm);
